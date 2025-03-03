@@ -1,39 +1,36 @@
 // "Each little piece of functionality should be able to fit in the game, player or gameboard objects."
 
+function createPlayer (name, symbol) {
+    let playerName = name;
+    const getName = () => playerName;
+    const setName = (name) => {playerName = name;}
+    const playerSymbol = symbol;
+    const getSymbol = () => playerSymbol;
+    return { getName, setName, getSymbol }
+}
+
+let PLAYER1 = createPlayer('player1', 'X');
+let PLAYER2 = createPlayer('player2', 'O');
+
 const GAME_OBJECT = (function () {
-    let computerSymbol;
-    let isPlayersTurn = true;
+    let currentPlayer = PLAYER1;
+    let nextPlayer = PLAYER2;
     let board = ["", "", "", "", "", "", "", "", ""];
     const getBoard = () => board;
-    const getSymbol = () => computerSymbol;
-    const setSymbol = (symbol) => { computerSymbol = symbol }
-    const alterBoard = (pos, symbol) => { board[pos] = symbol; }
-    const takeTurn = () => {
-        let choice = strategize();
-        alterBoard(choice, computerSymbol)
-        UIController.computerTurn(choice);
-        console.log(board)
+    const alterBoard = (pos, symbol) => {
+        board[pos] = symbol;
         if (isGameFinished()) {
             //reset board
             board = ["", "", "", "", "", "", "", "", ""];
-            // reset css to play again
-            UIController.finishGame(); 
+            // reset css/html to play again
+            UIController.finishGame();
         }
     }
-    const strategize = () => {
-        // TODO: put in an actual strategy
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] == "") {
-                console.log("computer plays position", i);
-                return i; 
-            }
-        }
-        console.log("problem with strategy")
-    }
+
 
     let isGameFinished = () => {
         // TODO: put in more than one win condition lol
-        if (board[0] == board[1] && board[1] == board[2] && board[2] != ""){
+        if (board[0] == board[1] && board[1] == board[2] && board[2] != "") {
             console.log(board[0], board[1], board[2])
             console.log("returning true")
             return true;
@@ -41,19 +38,10 @@ const GAME_OBJECT = (function () {
         console.log("returning false")
         return false;
     }
-    return { isGameFinished, isPlayersTurn, getBoard, getSymbol, setSymbol, alterBoard, takeTurn }
+    return { isGameFinished, getBoard, alterBoard }
 })();
 
-const PLAYER = (function () {
-    let playerName;
-    let playerSymbol;
-    const getName = () => playerName;
-    const setName = (name) => { playerName = name }
-    const getSymbol = () => playerSymbol;
-    const setSymbol = (symbol) => { playerSymbol = symbol }
 
-    return { getName, setName, getSymbol, setSymbol }
-})();
 
 const UIController = (function () {
     const initButtons = () => {
@@ -72,22 +60,13 @@ const UIController = (function () {
 
     const formSubmit = (event) => {
         event.preventDefault();
-        const name = document.getElementById("playerName");
-        const symbolX = document.getElementById("optionX").checked;
-        const symbolO = document.getElementById("optionO").checked;
+        const name1 = document.getElementById("player1");
+        const name2 = document.getElementById("player2");
         // verify user inputs
-        if ((symbolX || symbolO) && name != null) {
-            PLAYER.setName(name.value);
-            console.log("O is ", symbolO, "X is", symbolX)
-            if (symbolX) {
-                PLAYER.setSymbol('X');
-                GAME_OBJECT.setSymbol('O');
-            }
-            else {
-                PLAYER.setSymbol('O');
-                GAME_OBJECT.setSymbol('X');
-            }
-            console.log("Player is now named ", PLAYER.getName(), "with a symbol of ", PLAYER.getSymbol())
+        if (name1.value != "" && name2.value != "") {
+            PLAYER1.setName(name1.value);
+            PLAYER2.setName(name2.value);
+            console.log("Player is now named ", PLAYER1.getName(), "player2 is ", PLAYER2.getName())
             hideForm();
             revealBoard();
         }
@@ -98,12 +77,13 @@ const UIController = (function () {
         }
     }
 
-    const buttonPress = (event) => {    //private, but accessible by the buttons themselves?
+    const buttonPress = (event) => {
         if (event.target.innerHTML == '') {
-            event.target.innerHTML = PLAYER.getSymbol();
+            event.target.innerHTML = PLAYER1.getSymbol();
             GAME_OBJECT.alterBoard(event.target.id, PLAYER.getSymbol())
-            // tell computer to take its turn
-            GAME_OBJECT.takeTurn();
+            let temp = nextPlayer;
+            GAME_OBJECT.nextPlayer = currentPlayer;
+            GAME_OBJECT.currentPlayer = temp;
         }
         else {
             console.log("you cant do that!");
@@ -133,14 +113,15 @@ const UIController = (function () {
         header.innerHTML = "Game over! Play again?"
         const formContainer = document.getElementById('form_container');
         formContainer.style.display = 'flex';
+        const form = document.getElementById('player_info');
+        form.reset();
         const board = document.getElementById('game_container');
         board.style.display = 'none';
-        
-        
+
+
     }
 
     initButtons()
     initForm()
     return { buttonPress, finishGame, computerTurn }
 })();
-
