@@ -38,7 +38,7 @@ const GAME_OBJECT = (function () {
         console.log("returning false")
         return false;
     }
-    return { isGameFinished, getBoard, alterBoard }
+    return { isGameFinished, getBoard, alterBoard, currentPlayer, nextPlayer }
 })();
 
 
@@ -60,12 +60,12 @@ const UIController = (function () {
 
     const formSubmit = (event) => {
         event.preventDefault();
-        const name1 = document.getElementById("player1");
-        const name2 = document.getElementById("player2");
+        const nameInput1 = document.getElementById("player1");
+        const nameInput2 = document.getElementById("player2");
         // verify user inputs
-        if (name1.value != "" && name2.value != "") {
-            PLAYER1.setName(name1.value);
-            PLAYER2.setName(name2.value);
+        if (nameInput1.value != "" && nameInput2.value != "") {
+            PLAYER1.setName(nameInput1.value);
+            PLAYER2.setName(nameInput2.value);
             console.log("Player is now named ", PLAYER1.getName(), "player2 is ", PLAYER2.getName())
             hideForm();
             revealBoard();
@@ -79,11 +79,12 @@ const UIController = (function () {
 
     const buttonPress = (event) => {
         if (event.target.innerHTML == '') {
-            event.target.innerHTML = PLAYER1.getSymbol();
-            GAME_OBJECT.alterBoard(event.target.id, PLAYER.getSymbol())
-            let temp = nextPlayer;
-            GAME_OBJECT.nextPlayer = currentPlayer;
-            GAME_OBJECT.currentPlayer = temp;
+            event.target.innerHTML = GAME_OBJECT.currentPlayer.getSymbol();
+            GAME_OBJECT.alterBoard(event.target.id, GAME_OBJECT.currentPlayer.getSymbol())
+            console.log(GAME_OBJECT.currentPlayer.getName(), " just played. Next up is ", GAME_OBJECT.nextPlayer.getName())
+            let swap = GAME_OBJECT.nextPlayer;
+            GAME_OBJECT.nextPlayer = GAME_OBJECT.currentPlayer;
+            GAME_OBJECT.currentPlayer = swap;
         }
         else {
             console.log("you cant do that!");
