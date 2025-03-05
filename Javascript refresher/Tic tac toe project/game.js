@@ -26,6 +26,7 @@ const GAME_OBJECT = (function () {
     const resetGameObject = () => {
         board = ["", "", "", "", "", "", "", "", ""];
         winner = null;
+        currentPlayer = PLAYER1;
     }
     const alternatePlayers = () => {
         let temp = currentPlayer;
@@ -43,9 +44,9 @@ const GAME_OBJECT = (function () {
         [0, 4, 8], [2, 4, 6]];
         // Look for a winner
         for (var i = 0; i < winConditions.length; i++) { // i = [0,1,2]
-            console.log(`currently checking this combo:'${board[winConditions[i][0]]}' + '${board[winConditions[i][1]]}' + and finally '${board[winConditions[i][2]]}'`);
+            console.log(`currently checking this combo:'${winConditions[i][0]}' + '${winConditions[i][1]}' + and finally '${winConditions[i][2]}'`);
             if (board[winConditions[i][0]] == board[winConditions[i][1]] && board[winConditions[i][1]] == board[winConditions[i][2]] && board[winConditions[i][2]] != "") {
-                console.log("returning TRUE! isgamefinished", board[winConditions[i][0]], " ", board[winConditions[i][1]], " ", board[winConditions[i][2]])
+                console.log("returning TRUE! isgamefinished", winConditions[i][0], " ", winConditions[i][1], " ", winConditions[i][2])
                 winner = currentPlayer;
                 return true;
             }
