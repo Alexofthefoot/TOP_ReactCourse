@@ -39,7 +39,7 @@ const GAME_OBJECT = (function () {
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
         [0, 4, 8], [2, 4, 6]];
         // Look for a winner
-        for (var i = 0; i < winConditions.length; i++) { // eg. i = [0,1,2]
+        for (var i = 0; i < winConditions.length; i++) { // eg. i = [0,1,2] 
             if (board[winConditions[i][0]] == board[winConditions[i][1]] && board[winConditions[i][1]] == board[winConditions[i][2]] && board[winConditions[i][2]] != "") {
                 console.log("returning TRUE! isgamefinished", winConditions[i][0], " ", winConditions[i][1], " ", winConditions[i][2])
                 winner = currentPlayer;
