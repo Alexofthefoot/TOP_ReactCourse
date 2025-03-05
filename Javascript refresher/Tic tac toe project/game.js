@@ -13,9 +13,10 @@ let PLAYER1 = createPlayer('player1', 'X');
 let PLAYER2 = createPlayer('player2', 'O');
 
 const GAME_OBJECT = (function () {
-    let currentPlayer = PLAYER1;
-    let nextPlayer = PLAYER2;
     let board = ["", "", "", "", "", "", "", "", ""];
+    let currentPlayer = PLAYER1;
+    const getCurrentPlayer = () => currentPlayer;
+    let nextPlayer = PLAYER2;
     const getBoard = () => board;
     const alterBoard = (pos, symbol) => {
         board[pos] = symbol;
@@ -26,19 +27,24 @@ const GAME_OBJECT = (function () {
             UIController.finishGame();
         }
     }
-
+    const alternatePlayers = () => {
+        let temp = currentPlayer;
+        currentPlayer = nextPlayer;
+        nextPlayer = temp;
+    }
 
     let isGameFinished = () => {
+        // possible end conditions: the board is full (lose-lose), somebody won the game (win-lose)
         // TODO: put in more than one win condition lol
         if (board[0] == board[1] && board[1] == board[2] && board[2] != "") {
             console.log(board[0], board[1], board[2])
-            console.log("returning true")
+            console.log("returning true isgamefinished")
             return true;
         }
-        console.log("returning false")
+        console.log("returning false isgamefinished")
         return false;
     }
-    return { isGameFinished, getBoard, alterBoard, currentPlayer, nextPlayer }
+    return { isGameFinished, getBoard, alterBoard, getCurrentPlayer, alternatePlayers }
 })();
 
 
@@ -47,7 +53,7 @@ const UIController = (function () {
     const initButtons = () => {
         let buttons = document.querySelectorAll('button');
         buttons.forEach(button => {
-            if (button.id != 'submit_button') { //ignore the form submission button
+            if (button.id != 'submit_button') { //apply to all except the form submission button
                 button.addEventListener('click', buttonPress, button.id);
             }
         })
@@ -77,25 +83,23 @@ const UIController = (function () {
         }
     }
 
+    const alternateUserInstruction = () => {
+        console.log("alternate instruction function is called")
+        let msg = document.getElementById('user_instruction');
+        let name = GAME_OBJECT.getCurrentPlayer().getName();
+        msg.innerHTML = name + "'s turn!..";
+    }
+
     const buttonPress = (event) => {
         if (event.target.innerHTML == '') {
-            event.target.innerHTML = GAME_OBJECT.currentPlayer.getSymbol();
-            GAME_OBJECT.alterBoard(event.target.id, GAME_OBJECT.currentPlayer.getSymbol())
-            console.log(GAME_OBJECT.currentPlayer.getName(), " just played. Next up is ", GAME_OBJECT.nextPlayer.getName())
-            let swap = GAME_OBJECT.nextPlayer;
-            GAME_OBJECT.nextPlayer = GAME_OBJECT.currentPlayer;
-            GAME_OBJECT.currentPlayer = swap;
+            event.target.innerHTML = GAME_OBJECT.getCurrentPlayer().getSymbol();
+            console.log("in button press: current player and symbol are: " + GAME_OBJECT.getCurrentPlayer().getName() + GAME_OBJECT.getCurrentPlayer().getSymbol())
+            alternateUserInstruction();
+            GAME_OBJECT.alternatePlayers();
         }
         else {
             console.log("you cant do that!");
         }
-    }
-
-    const computerTurn = (pos) => {
-        let button = document.getElementById(pos);
-        console.log("pos is", pos)
-        console.log("computer is ", GAME_OBJECT.getSymbol())
-        button.innerHTML = GAME_OBJECT.getSymbol();
     }
 
     const hideForm = () => {
@@ -107,7 +111,8 @@ const UIController = (function () {
         const board = document.getElementById('game_container');
         board.style.display = 'flex';
         const h3 = document.getElementById('user_instruction');
-        h3.innerHTML = "Click a button to start";
+        const name = PLAYER1.getName();
+        h3.innerHTML = name + " starts, click a button!";
     }
     const finishGame = () => {
         const header = document.getElementById('user_instruction');
@@ -124,5 +129,5 @@ const UIController = (function () {
 
     initButtons()
     initForm()
-    return { buttonPress, finishGame, computerTurn }
+    return { buttonPress, finishGame }
 })();
