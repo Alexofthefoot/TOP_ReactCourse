@@ -1,9 +1,9 @@
 // "Each little piece of functionality should be able to fit in the game, player or gameboard objects."
 
-function createPlayer (name, symbol) {
+function createPlayer(name, symbol) {
     let playerName = name;
     const getName = () => playerName;
-    const setName = (name) => {playerName = name;}
+    const setName = (name) => { playerName = name; }
     const playerSymbol = symbol;
     const getSymbol = () => playerSymbol;
     return { getName, setName, getSymbol }
@@ -15,17 +15,17 @@ let PLAYER2 = createPlayer('player2', 'O');
 const GAME_OBJECT = (function () {
     let board = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer = PLAYER1;
+    let winner = null;
+    const getWinner = () => winner;
     const getCurrentPlayer = () => currentPlayer;
     let nextPlayer = PLAYER2;
     const getBoard = () => board;
     const alterBoard = (pos, symbol) => {
         board[pos] = symbol;
-        if (isGameFinished()) {
-            //reset board
-            board = ["", "", "", "", "", "", "", "", ""];
-            // reset css/html to play again
-            UIController.finishGame();
-        }
+    }
+    const resetGameObject = () => {
+        board = ["", "", "", "", "", "", "", "", ""];
+        winner = null;
     }
     const alternatePlayers = () => {
         let temp = currentPlayer;
@@ -36,15 +36,32 @@ const GAME_OBJECT = (function () {
     let isGameFinished = () => {
         // possible end conditions: the board is full (lose-lose), somebody won the game (win-lose)
         // TODO: put in more than one win condition lol
-        if (board[0] == board[1] && board[1] == board[2] && board[2] != "") {
-            console.log(board[0], board[1], board[2])
-            console.log("returning true isgamefinished")
-            return true;
+        //board is full (game )
+        console.log("test")
+        let winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]];
+        // Look for a winner
+        for (var i = 0; i < winConditions.length; i++) { // i = [0,1,2]
+            console.log(`currently checking this combo:'${board[winConditions[i][0]]}' + '${board[winConditions[i][1]]}' + and finally '${board[winConditions[i][2]]}'`);
+            if (board[winConditions[i][0]] == board[winConditions[i][1]] && board[winConditions[i][1]] == board[winConditions[i][2]] && board[winConditions[i][2]] != "") {
+                console.log("returning TRUE! isgamefinished", board[winConditions[i][0]], " ", board[winConditions[i][1]], " ", board[winConditions[i][2]])
+                winner = currentPlayer;
+                return true;
+            }
         }
-        console.log("returning false isgamefinished")
-        return false;
+        // look for a full board
+        for (var i = 0; i < 9; i++) {
+            if (board[i] == "") {
+                console.log("RETURNING FALSE, empy space in slot " + i);
+                return false;
+            }
+        }
+        console.log("RETURNING TRUE, all slots full ");
+        return true;
     }
-    return { isGameFinished, getBoard, alterBoard, getCurrentPlayer, alternatePlayers }
+
+    return { isGameFinished, getBoard, alterBoard, getCurrentPlayer, alternatePlayers, getWinner, resetGameObject }
 })();
 
 
@@ -55,6 +72,7 @@ const UIController = (function () {
         buttons.forEach(button => {
             if (button.id != 'submit_button') { //apply to all except the form submission button
                 button.addEventListener('click', buttonPress, button.id);
+                button.innerHTML = "";
             }
         })
     }
@@ -68,11 +86,12 @@ const UIController = (function () {
         event.preventDefault();
         const nameInput1 = document.getElementById("player1");
         const nameInput2 = document.getElementById("player2");
-        // verify user inputs
+        // verify both user inputs
         if (nameInput1.value != "" && nameInput2.value != "") {
             PLAYER1.setName(nameInput1.value);
             PLAYER2.setName(nameInput2.value);
             console.log("Player is now named ", PLAYER1.getName(), "player2 is ", PLAYER2.getName())
+            //swap out the visible html elements
             hideForm();
             revealBoard();
         }
@@ -84,18 +103,26 @@ const UIController = (function () {
     }
 
     const alternateUserInstruction = () => {
-        console.log("alternate instruction function is called")
         let msg = document.getElementById('user_instruction');
         let name = GAME_OBJECT.getCurrentPlayer().getName();
-        msg.innerHTML = name + "'s turn!..";
+        let symbol = GAME_OBJECT.getCurrentPlayer().getSymbol();
+        msg.innerHTML = name + "'s turn. Playing with symbol: " + symbol;
     }
 
     const buttonPress = (event) => {
         if (event.target.innerHTML == '') {
-            event.target.innerHTML = GAME_OBJECT.getCurrentPlayer().getSymbol();
-            console.log("in button press: current player and symbol are: " + GAME_OBJECT.getCurrentPlayer().getName() + GAME_OBJECT.getCurrentPlayer().getSymbol())
-            alternateUserInstruction();
-            GAME_OBJECT.alternatePlayers();
+            let symbol = GAME_OBJECT.getCurrentPlayer().getSymbol();
+            GAME_OBJECT.alterBoard(event.target.id, symbol);
+            if (GAME_OBJECT.isGameFinished()) {
+                finishGame();
+                GAME_OBJECT.resetGameObject();
+            }
+            else {
+                event.target.innerHTML = symbol;
+                GAME_OBJECT.alternatePlayers();
+                alternateUserInstruction();
+            }
+            
         }
         else {
             console.log("you cant do that!");
@@ -116,7 +143,14 @@ const UIController = (function () {
     }
     const finishGame = () => {
         const header = document.getElementById('user_instruction');
-        header.innerHTML = "Game over! Play again?"
+        if (GAME_OBJECT.getWinner() != null) {
+            header.innerHTML = GAME_OBJECT.getWinner().getName() + " wins! Play again?";
+        }
+        else {
+            header.innerHTML = "Game over! Play again?"
+        }
+        //reset all the board buttons
+        initButtons();
         const formContainer = document.getElementById('form_container');
         formContainer.style.display = 'flex';
         const form = document.getElementById('player_info');
