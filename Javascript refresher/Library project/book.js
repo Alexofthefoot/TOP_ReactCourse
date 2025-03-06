@@ -1,30 +1,36 @@
 const myLibrary = [];
 let CURRENT_ID = 0;
 
-function Book(title, author, pages, isRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-    this.identifier = CURRENT_ID;
-    CURRENT_ID++;
-    this.info = function() {
-        let info = `${this.title}, written by ${author} has ${this.pages} pages and `;
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
+        this.identifier = CURRENT_ID;
+        CURRENT_ID++;
+    }
+    get isRead() {
+        return this._isRead;
+    }
+
+    get infoString() {
+        let string = `${this.title}, written by ${this.author} has ${this.pages} pages and `;
         if (this.isRead) {
-            info += "has been read.";
+            string += "has been read.";
         }
         else {
-            info += "has not been read.";
+            string += "has not been read.";
         }
-
-        return info;
+        return string;
     }
-    this.changeIsRead = function() {
-        this.isRead = !this.isRead;
+    set isRead(bool) {  
+        console.log("setter called") 
+        this._isRead = bool;
     }
 }
 
-function updatePage(book) {
+function updateWebpage(book) {
     const container = document.getElementById('library-container');
     //The div container
     let newDiv = document.createElement("div");
@@ -32,10 +38,9 @@ function updatePage(book) {
     container.appendChild(newDiv);
     //text element
     let newP = document.createElement("p") 
-    newP.innerHTML = book.info()
-   
+    newP.innerHTML = book.infoString;
     newDiv.appendChild(newP);
-    //toggle button
+    //toggle button 
     let button = document.createElement("button")
     button.innerHTML = "Toggle Read Status"
     button.type = "button"
@@ -55,14 +60,15 @@ function displayForm() {
 }
 
 function changeReadStatus(button) {
-    // change value in library
-    var idx = myLibrary.findIndex((book) => book.identifier == button.id)
-    var book = myLibrary[idx]
-    book.changeIsRead()
-    // change what <p> displays 
+    // change value in the library array
+    let idx = myLibrary.findIndex((book) => book.identifier == button.id)
+    let book = myLibrary[idx]
+    let bool = book.isRead;
+    book.isRead = !bool;
+    // change what the html displays 
     var parent = button.parentNode
     var p = parent.firstElementChild
-    p.innerHTML = book.info()
+    p.innerHTML = book.infoString;
     
 }
 
@@ -80,11 +86,9 @@ document.getElementById("new-book").addEventListener("submit", submitForm);
       event.preventDefault();
       let book = new Book(document.getElementById("title").value, document.getElementById("author").value, document.getElementById("pages").value, document.getElementById("read").value)
       myLibrary.push(book)
-      updatePage(book)
+      updateWebpage(book)
       document.getElementById("new-book").reset();
     }
-
-
   
 function initialSetup() {
     let book1 = new Book("The Hobbit", "J.R.R. Tolkien", 310, true)
@@ -93,11 +97,11 @@ function initialSetup() {
     let book4 = new Book("The Catcher in the Rye", "J.D.Salinger", 277, false)
     let book5 = new Book("1984", "George Orwell", 328, true)
     myLibrary.push(book1, book2, book3, book4, book5)
-    updatePage(book1)
-    updatePage(book2)
-    updatePage(book3)
-    updatePage(book4)
-    updatePage(book5)
+    updateWebpage(book1)
+    updateWebpage(book2)
+    updateWebpage(book3)
+    updateWebpage(book4)
+    updateWebpage(book5)
     console.log(myLibrary)
 }
 
