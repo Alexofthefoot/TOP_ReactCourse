@@ -66,8 +66,8 @@ function changeReadStatus(button) {
     let bool = book.isRead;
     book.isRead = !bool;
     // change what the html displays 
-    var parent = button.parentNode
-    var p = parent.firstElementChild
+    let parent = button.parentNode
+    let p = parent.firstElementChild
     p.innerHTML = book.infoString;
     
 }
