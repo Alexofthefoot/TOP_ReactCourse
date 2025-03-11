@@ -1,0 +1,55 @@
+* {
+    /* font-family: 'Brush Script MT', cursive; */
+    font-weight: 400;
+    font-style: normal;
+  }
+
+body {
+    background-color:#E6D5C3;
+    color: darkslateblue;
+    font-family:serif;
+    margin-top: 70px;
+    min-height: 90vh;
+}
+
+/***** Nav Bar *****/
+#nav-bar {
+    background-color: #C3A2C8;
+    height: 70px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+#nav-bar button{
+    height: default;
+    margin: 5px 10px;
+    padding: 5px 20px;
+    align-items: center;
+    background-color: #A88BAF;
+    font-size: medium;
+    border-radius: 50%;
+    border: 0;
+}
+
+#nav-bar button:hover {
+    background-color: slategray;
+}
+
+#nav-bar button:active {
+    background-color: darkslategray;
+}
+/***** Actual Page Contents *****/
+div#content{
+    margin: 0% 15% 0% 15%;
+    padding: 20px 10px 200px;
+    min-height: 100%;
+    background-color: #F8F3E9;
+}
+
+div#content div {
+    margin: 20px;
+    border: solid 1px rebeccapurple;
+}
