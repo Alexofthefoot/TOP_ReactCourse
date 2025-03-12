@@ -2,12 +2,12 @@
     font-family: 'Brush Script MT', cursive;
     font-weight: 300;
     font-style: normal;
-  }
+}
 
 body {
-    background-color:#E6D5C3;
+    background-color: #E6D5C3;
     color: darkslateblue;
-    font-family:serif;
+    font-family: serif;
     margin-top: 100px;
     min-height: 90vh;
 }
@@ -23,6 +23,7 @@ body {
     display: flex;
     justify-content: center;
 }
+
 #nav-bar button {
     margin: 5px 10px;
     padding: 5px 20px;
@@ -32,9 +33,11 @@ body {
     border-radius: 50%;
     border: 0;
 }
+
 #nav-bar button.btn-active {
     background-color: #c9aace;
 }
+
 #nav-bar button:hover {
     background-color: slategray;
 }
@@ -48,11 +51,12 @@ body {
 div#content h1 {
     font-size: xxx-large;
 }
+
 div#content p {
     font-size: x-large;
 }
 
-div#content{
+div#content {
     margin: 0% 15% 0% 15%;
     padding: 20px 10px 200px;
     min-height: 100%;
@@ -63,7 +67,7 @@ div#content div {
     margin: 20px;
     /* border: solid 1px #c9aace; */
     border-radius: 10;
-    /* background-color: #c9aace; */
+    padding: 10px;
 }
 
 img {
@@ -71,6 +75,7 @@ img {
     margin: auto;
     display: block;
 }
+
 a {
     text-align: right;
 }

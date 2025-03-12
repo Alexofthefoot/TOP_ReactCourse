@@ -1,19 +1,16 @@
 import lavImage from "./../lavender.png";
-let homegreeting = "this is the home page";
 
 const setUpHome = () => {
     let content = document.getElementById("content");
     let home = document.createElement("div");
     home.id = "home-section";
     content.appendChild(home);
-
     //H1
     let newDiv = document.createElement("div");
     let newH1 = document.createElement("H1");
     newH1.innerHTML = "Le Petit Lavande";
     newDiv.appendChild(newH1);
     home.appendChild(newDiv);
-
     // Welcome paragraph
     newDiv = document.createElement("div");
     let newP = document.createElement("p");
@@ -33,8 +30,8 @@ const setUpHome = () => {
     home.appendChild(newDiv);
     //img
     let img = document.createElement('img');
-        img.src = lavImage;
-        img.alt = "illustration of a lavender flower";
+    img.src = lavImage;
+    img.alt = "illustration of a lavender flower";
     home.appendChild(img)
     //Call to action
     newDiv = document.createElement("div");
@@ -58,4 +55,4 @@ const setUpHome = () => {
 
 }
 
-export { homegreeting, setUpHome };
+export { setUpHome };

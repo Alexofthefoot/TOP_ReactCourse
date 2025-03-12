@@ -1,5 +1,4 @@
 import lavImage from "./../lavender.png";
-let aboutgreeting = "this is the about page";
 
 const createImg = () => {
     let img = document.createElement('img');
@@ -13,14 +12,12 @@ const setUpAbout = () => {
     let about = document.createElement("div");
     about.id = "about-section";
     content.appendChild(about);
-
     //H1
     let newDiv = document.createElement("div");
     let newH1 = document.createElement("H1");
     newH1.innerHTML = "Le Petit Lavande";
     newDiv.appendChild(newH1);
     about.appendChild(newDiv);
-
     //About us
     newDiv = document.createElement("div");
     let newP = document.createElement("p");
@@ -78,7 +75,6 @@ const setUpAbout = () => {
                     Monday - Friday: 7:00 AM - 3:00 PM<br>
                     Saturday - Sunday: 8:00 AM - 4:00 PM`;
     newDiv.appendChild(newP);
-
     about.appendChild(newDiv);
     //Attribution
     let newA = document.createElement('a');
@@ -89,4 +85,4 @@ const setUpAbout = () => {
 }
 
 
-export { aboutgreeting, setUpAbout };
+export { setUpAbout };

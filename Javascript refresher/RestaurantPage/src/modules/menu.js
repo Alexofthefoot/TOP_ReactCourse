@@ -1,5 +1,4 @@
 import lavImage from "./../lavender.png";
-let menugreeting = "this is the menu page";
 
 const createImg = () => {
     let img = document.createElement('img');
@@ -67,4 +66,4 @@ const setUpMenu = () => {
 
 }
 
-export { menugreeting, setUpMenu };
+export { setUpMenu };
