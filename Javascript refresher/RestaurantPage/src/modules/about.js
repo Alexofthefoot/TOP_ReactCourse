@@ -1,4 +1,12 @@
+import lavImage from "./../lavender.png";
 let aboutgreeting = "this is the about page";
+
+const createImg = () => {
+    let img = document.createElement('img');
+    img.src = lavImage;
+    img.alt = "illustration of a lavender flower";
+    return img;
+}
 
 const setUpAbout = () => {
     let content = document.getElementById("content");
@@ -16,7 +24,7 @@ const setUpAbout = () => {
     //About us
     newDiv = document.createElement("div");
     let newP = document.createElement("p");
-    newP.innerHTML = "About Us 🌿💜";
+    newP.innerHTML = "About Us";
     newDiv.appendChild(newP);
     newP = document.createElement("p");
     newP.innerHTML = `At La Petite Lavande, we bring the charm of Provence to the heart of the city. Inspired by the
@@ -29,11 +37,13 @@ const setUpAbout = () => {
     newP.innerHTML = "Bon appétit!";
     newDiv.appendChild(newP);
     about.appendChild(newDiv);
-
+    //img
+    let img = createImg();
+    about.appendChild(img);
     //Meet the owner
     newDiv = document.createElement("div");
     newP = document.createElement("p");
-    newP.innerHTML = "Meet the Owner 🌸";
+    newP.innerHTML = "Meet the Owner";
     newDiv.appendChild(newP);
     newP = document.createElement("p");
     newP.innerHTML = `Sophie Dubois grew up in the French countryside, inspired by the beauty of lavender fields. After
@@ -42,6 +52,9 @@ const setUpAbout = () => {
                     space where guests can relax and savor delicious, lavender-infused dishes.`;
     newDiv.appendChild(newP);
     about.appendChild(newDiv);
+    //img
+    img = createImg();
+    about.appendChild(img)
     //Contact us
     newDiv = document.createElement("div");
     newP = document.createElement("p");
@@ -67,7 +80,11 @@ const setUpAbout = () => {
     newDiv.appendChild(newP);
 
     about.appendChild(newDiv);
-
+    //Attribution
+    let newA = document.createElement('a');
+    newA.href = "https://pngtree.com/freepng/lavender-flower-isolated_14561552.html";
+    newA.innerHTML = "png image from pngtree.com/";
+    about.appendChild(newA);
 
 }
 

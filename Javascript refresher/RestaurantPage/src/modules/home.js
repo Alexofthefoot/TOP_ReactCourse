@@ -1,3 +1,4 @@
+import lavImage from "./../lavender.png";
 let homegreeting = "this is the home page";
 
 const setUpHome = () => {
@@ -16,7 +17,7 @@ const setUpHome = () => {
     // Welcome paragraph
     newDiv = document.createElement("div");
     let newP = document.createElement("p");
-    newP.innerHTML = "Welcome to La Petite Lavande 🌿💜";
+    newP.innerHTML = "Welcome to La Petite Lavande";
     newDiv.appendChild(newP);
     newP = document.createElement("p");
     newP.innerHTML = `A taste of Provence in every bite. Tucked away in a quiet corner of the city, La Petite Lavande
@@ -30,7 +31,11 @@ const setUpHome = () => {
                     you to slow down, savor the moment, and enjoy the simple pleasures of French cuisine.`;
     newDiv.appendChild(newP);
     home.appendChild(newDiv);
-
+    //img
+    let img = document.createElement('img');
+        img.src = lavImage;
+        img.alt = "illustration of a lavender flower";
+    home.appendChild(img)
     //Call to action
     newDiv = document.createElement("div");
     newP = document.createElement("p");
@@ -45,6 +50,12 @@ const setUpHome = () => {
                 🌿 Seasonal ingredients with a touch of lavender-inspired magic`;
     newDiv.appendChild(newP);
     home.appendChild(newDiv);
+    //Attribution
+    let newA = document.createElement('a');
+    newA.href = "https://pngtree.com/freepng/lavender-flower-isolated_14561552.html";
+    newA.innerHTML = "png image from pngtree.com/";
+    home.appendChild(newA);
+
 }
 
 export { homegreeting, setUpHome };

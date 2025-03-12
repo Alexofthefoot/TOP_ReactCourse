@@ -61,7 +61,7 @@ div#content{
 
 div#content div {
     margin: 20px;
-    border: solid 1px #c9aace;
+    /* border: solid 1px #c9aace; */
     border-radius: 10;
     /* background-color: #c9aace; */
 }
