@@ -1,6 +1,6 @@
 * {
     font-family: 'Brush Script MT', cursive;
-    font-weight: 400;
+    font-weight: 300;
     font-style: normal;
   }
 
@@ -8,14 +8,14 @@ body {
     background-color:#E6D5C3;
     color: darkslateblue;
     font-family:serif;
-    margin-top: 70px;
+    margin-top: 100px;
     min-height: 90vh;
 }
 
 /***** Nav Bar *****/
 #nav-bar {
     background-color: #C3A2C8;
-    height: 70px;
+    height: 100px;
     position: fixed;
     left: 0;
     top: 0;
@@ -23,13 +23,13 @@ body {
     display: flex;
     justify-content: center;
 }
-#nav-bar button{
+#nav-bar button {
     height: default;
     margin: 5px 10px;
     padding: 5px 20px;
     align-items: center;
     background-color: #A88BAF;
-    font-size: medium;
+    font-size: x-large;
     border-radius: 50%;
     border: 0;
 }
@@ -46,6 +46,13 @@ body {
 
 
 /***** Actual Page Contents *****/
+div#content h1 {
+    font-size: xxx-large;
+}
+div#content p {
+    font-size: x-large;
+}
+
 div#content{
     margin: 0% 15% 0% 15%;
     padding: 20px 10px 200px;
@@ -55,6 +62,16 @@ div#content{
 
 div#content div {
     margin: 20px;
-    border: solid 1px #c9aace;
+    /* border: solid 1px #c9aace; */
+    border-radius: 10;
     /* background-color: #c9aace; */
+}
+
+img {
+    height: 40px;
+    margin: auto;
+    display: block;
+}
+a {
+    text-align: right;
 }
