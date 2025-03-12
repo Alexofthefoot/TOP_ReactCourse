@@ -2,13 +2,16 @@ let homegreeting = "this is the home page";
 
 const setUpHome = () => {
     let content = document.getElementById("content");
+    let home = document.createElement("div");
+    home.id = "home-section";
+    content.appendChild(home);
 
     //H1
     let newDiv = document.createElement("div");
     let newH1 = document.createElement("H1");
     newH1.innerHTML = "Le Petit Lavande";
     newDiv.appendChild(newH1);
-    content.appendChild(newDiv);
+    home.appendChild(newDiv);
 
     // Welcome paragraph
     newDiv = document.createElement("div");
@@ -26,7 +29,7 @@ const setUpHome = () => {
                     invite
                     you to slow down, savor the moment, and enjoy the simple pleasures of French cuisine.`;
     newDiv.appendChild(newP);
-    content.appendChild(newDiv);
+    home.appendChild(newDiv);
 
     //Call to action
     newDiv = document.createElement("div");
@@ -41,7 +44,7 @@ const setUpHome = () => {
                 🥐 House-made pastries, delicate crêpes, and warm baguettes<br>
                 🌿 Seasonal ingredients with a touch of lavender-inspired magic`;
     newDiv.appendChild(newP);
-    content.appendChild(newDiv);
+    home.appendChild(newDiv);
 }
 
 
