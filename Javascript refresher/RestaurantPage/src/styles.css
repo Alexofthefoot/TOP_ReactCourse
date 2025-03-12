@@ -1,5 +1,5 @@
 * {
-    /* font-family: 'Brush Script MT', cursive; */
+    font-family: 'Brush Script MT', cursive;
     font-weight: 400;
     font-style: normal;
   }
@@ -33,7 +33,9 @@ body {
     border-radius: 50%;
     border: 0;
 }
-
+#nav-bar button.btn-active {
+    background-color: #c9aace;
+}
 #nav-bar button:hover {
     background-color: slategray;
 }
@@ -41,6 +43,8 @@ body {
 #nav-bar button:active {
     background-color: darkslategray;
 }
+
+
 /***** Actual Page Contents *****/
 div#content{
     margin: 0% 15% 0% 15%;
@@ -51,5 +55,6 @@ div#content{
 
 div#content div {
     margin: 20px;
-    border: solid 1px rebeccapurple;
+    border: solid 1px #c9aace;
+    /* background-color: #c9aace; */
 }
