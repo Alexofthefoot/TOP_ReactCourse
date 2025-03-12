@@ -1,7 +1,7 @@
 import "./styles.css";
 import { aboutgreeting } from "./modules/about";
 import { menugreeting } from "./modules/menu";
-import { homegreeting } from "./modules/home";
+import { homegreeting, setUpHome } from "./modules/home";
 
 
 // // Page control
@@ -23,6 +23,10 @@ const initButtons = () => {
 
 const myFunction = (event) => {
     console.log(event.currentTarget.greeting);
+    setUpHome();
+    
+
+
 }
 
 initButtons();

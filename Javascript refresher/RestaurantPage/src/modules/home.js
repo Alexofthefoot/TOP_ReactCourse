@@ -1,4 +1,50 @@
 let homegreeting = "this is the home page";
 
+const setUpHome = () => {
+    let content = document.getElementById("content");
 
-export { homegreeting };
+    //H1
+    let newDiv = document.createElement("div");
+    let newH1 = document.createElement("H1");
+    newH1.innerHTML = "Le Petit Lavande";
+    newDiv.appendChild(newH1);
+    content.appendChild(newDiv);
+
+    // Welcome paragraph
+    newDiv = document.createElement("div");
+    let newP = document.createElement("p");
+    newP.innerHTML = "Welcome to La Petite Lavande 🌿💜";
+    newDiv.appendChild(newP);
+    newP = document.createElement("p");
+    newP.innerHTML = `A taste of Provence in every bite. Tucked away in a quiet corner of the city, La Petite Lavande
+                    brings
+                    the charm of a rustic French café to your table. Inspired by the rolling lavender fields of
+                    Provence,
+                    our menu is crafted with fresh ingredients, delicate flavors, and a touch of Parisian elegance.
+                    Start your morning with a buttery croissant and a rich café au lait, or indulge in our signature
+                    lavender-infused pastries. Whether you're here for a leisurely brunch or a cozy afternoon tea, we
+                    invite
+                    you to slow down, savor the moment, and enjoy the simple pleasures of French cuisine.`;
+    newDiv.appendChild(newP);
+    content.appendChild(newDiv);
+
+    //Call to action
+    newDiv = document.createElement("div");
+    newP = document.createElement("p");
+    newP.innerHTML = `Start your morning with a buttery croissant and a rich café au lait, or indulge in our signature
+                    lavender-infused pastries. Whether you're here for a leisurely brunch or a cozy afternoon tea, we
+                    invite
+                    you to slow down, savor the moment, and enjoy the simple pleasures of French cuisine.`;
+    newDiv.appendChild(newP);
+    newP = document.createElement("p");
+    newP.innerHTML = `☕ Freshly brewed espresso & artisanal teas<br>
+                🥐 House-made pastries, delicate crêpes, and warm baguettes<br>
+                🌿 Seasonal ingredients with a touch of lavender-inspired magic`;
+    newDiv.appendChild(newP);
+    content.appendChild(newDiv);
+}
+
+
+
+
+export { homegreeting, setUpHome };
