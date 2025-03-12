@@ -47,7 +47,4 @@ const setUpHome = () => {
     home.appendChild(newDiv);
 }
 
-
-
-
 export { homegreeting, setUpHome };

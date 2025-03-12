@@ -51,7 +51,7 @@ const buttonPress = (event) => {
         setUpMenu();
     }
     else if (event.currentTarget.id == "btn-about") {
-        // setUpAbout();
+        setUpAbout();
     }
 
 }
